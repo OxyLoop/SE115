@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Cards{
     public String type;
     public String number;
@@ -7,12 +9,49 @@ public class Cards{
         this.type=type;
         this.number=number;
     }
+
+    public void shuffle(Cards[] deck){
+        Random r = new Random(System.currentTimeMillis());
+        for(int i=0; i<52; i++){
+            int n1 = r.nextInt(52);
+            int n2 = r.nextInt(52);
+            Cards yedekd ;
+            yedekd = deck[n1];
+            deck[n1]= deck[n2];
+            deck[n2] = yedekd; 
+        }
+    }
+
+    public void cut(Cards[] deck,int cutvalue){
+        int cutCounter=0;
+
+        Cards[] yedekDeck = new Cards[52];
+        for (int i = 0; i<52; i++) {
+            if(cutvalue+i==52) break;
+            yedekDeck[i] = deck[cutvalue+i];
+            cutCounter++;
+        }
+        for (int i=0; i<cutvalue; i++){
+            yedekDeck[cutCounter] =  deck[i];
+            cutCounter++;
+        }
+        for(int i=0; i<52; i++){
+            deck[i]= yedekDeck[i];
+        }
+    }
+
+    public int deal (Cards[] deck, Cards[] computerHand, Cards[] playerHand, int deckcardCounter){
+        for(int i=0; i<4;i++){
+            computerHand[i]=deck[2*i];
+            playerHand[i]=deck[2*i+1]; 
+            deckcardCounter = deckcardCounter +2;
+        }
+        return deckcardCounter;
+    }
     
     public String getNumber() {
         return number;
     }
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    
     
 }

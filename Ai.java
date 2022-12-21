@@ -58,7 +58,7 @@ public class Ai{
                 table[topofTable] = computerHand[i];
                 computerHand[i] = null;
                 topofTable++;
-                for(int j=0; i<=topofTable;j++){
+                for(int j=0; j<=topofTable;j++){
                     computerWonCards[j]=table[j];
                     table[j]= null;
                     computerwoncards++;
@@ -68,7 +68,11 @@ public class Ai{
         }
 
         Random r = new Random(System.currentTimeMillis());
-        int aiselect = r.nextInt(4);
+        int aiselect = 0;
+        for(;;){
+        aiselect = r.nextInt(4);
+        if(computerHand[aiselect]!=null) break;
+        }
         System.out.println(aiselect+1);
         table[topofTable+1] = computerHand[aiselect];
         computerHand[aiselect] = null;

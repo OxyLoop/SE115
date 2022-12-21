@@ -42,9 +42,10 @@ public class Cards{
 
     public int deal (Cards[] deck, Cards[] computerHand, Cards[] playerHand, int deckcardCounter){
         for(int i=0; i<4;i++){
-            computerHand[i]=deck[2*i];
-            playerHand[i]=deck[2*i+1]; 
-            deckcardCounter = deckcardCounter +2;
+            computerHand[i]=deck[deckcardCounter];
+            deckcardCounter = deckcardCounter +1;
+            playerHand[i]=deck[deckcardCounter]; 
+            deckcardCounter = deckcardCounter +1;
         }
         return deckcardCounter;
     }

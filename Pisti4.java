@@ -12,11 +12,10 @@ public class Pisti4{
         Cards[] playerHand = new Cards[5];
         Cards[] computerHand = new Cards[5];
         Cards[] table = new Cards[53];
-        Cards[] playerWonCards = new Cards[53];
-        Cards[] computerWonCards = new Cards[53];
+        Cards[] playerWonCards = new Cards[52];
+        Cards[] computerWonCards = new Cards[52];
 
 
-        int playerwoncards=0;
         int computerwoncards=0;
         int deckcardCounter=0;
         int topofTable = 0;
@@ -80,19 +79,41 @@ public class Pisti4{
 //player turn;
             while (gameContinue){
                 if(computerHand[0]==null){
+                    System.out.println("Dealing new cards.");
                     deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
                 }
 
-                topofTable = Player.play(playerHand,table,topofTable,playerwoncards,playerWonCards);
+                topofTable = Player.play(playerHand,table,topofTable,playerWonCards);
                 Player.scroll(playerHand);
                 
+                if(table[topofTable]!=null){
                 System.out.println(table[topofTable].type +"-"+ table[topofTable].number);
+                } else{
+                    System.out.println("table is empty");
+                }
+                System.out.println("top of table is "+topofTable);
 
 
                 topofTable = Ai.play(computerHand,table,topofTable,computerwoncards,computerWonCards);
                 Ai.scroll(computerHand);
-             
+                for(int i=0; i<4;){
+                    if(computerHand[i]==null) break;
+                    else {
+                        int a = i+1;
+                        System.out.println("ai "+ a +"-"+ computerHand[i].type +"-"+ computerHand[i].number);
+                        i++;
+                    }
+                }
+                System.out.println("...................");
+                System.out.println("deckcardcounter is "+deckcardCounter);
+                
+                if(deckcardCounter==51){
+                    System.out.println("Game Over!");
+                    gameContinue = false;
+                }
             }
+
+            
             
             
             

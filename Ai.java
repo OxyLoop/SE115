@@ -20,51 +20,44 @@ public class Ai{
         if(table[topofTable]==null){
             Random r = new Random(System.currentTimeMillis());
             int airandom = r.nextInt(4);
-            System.out.println(airandom+1);
-            table[topofTable+1]=computerHand[airandom];
+            System.out.println("ai select for null "+airandom);
+            table[topofTable]=computerHand[airandom];
             computerHand[airandom] = null;
-            topofTable++;
-        }
-        for(int i=0; i<4;){
-            if(computerHand[i]==null) break;
-            else {
-                int a = i+1;
-                System.out.println("ai "+ a +"-"+ computerHand[i].type +"-"+ computerHand[i].number);
-                i++;
-            }
+            return topofTable;
         }
         for(int i=0; i<4; i++){
             if(computerHand[i]==null) break;    
-            else if(table[topofTable].getNumber().equals(computerHand[i].getNumber())){
+            if(table[topofTable].getNumber().equals(computerHand[i].getNumber())){
                 System.out.println("Computer take table cards");
                 table[topofTable+1] = computerHand[i];
                 computerHand[i] = null;
                 topofTable++;
-                for(int j=0; j<=topofTable;j++){
+                for(int j=1; j<=topofTable;j++){
                     computerWonCards[j]=table[j];
                     table[j]= null;
                     computerwoncards++;
                 }
+                topofTable=1;
                 return topofTable;
             }
             
         }
         for(int i=0; i<4; i++){
-            if(computerHand[i]==null){
-                break;
-            }
+            if(computerHand[i]==null) break;
+            if(table[topofTable]!=null){
             if(computerHand[i].number=="Joker"){
                 System.out.println("Computer uses it's joker cards");
                 table[topofTable] = computerHand[i];
                 computerHand[i] = null;
                 topofTable++;
-                for(int j=0; j<=topofTable;j++){
+                for(int j=1; j<=topofTable;j++){
                     computerWonCards[j]=table[j];
                     table[j]= null;
                     computerwoncards++;
                 }
                 return topofTable;
-            } 
+            }
+        } 
         }
 
         Random r = new Random(System.currentTimeMillis());
@@ -73,7 +66,7 @@ public class Ai{
         aiselect = r.nextInt(4);
         if(computerHand[aiselect]!=null) break;
         }
-        System.out.println(aiselect+1);
+        System.out.println("ai select for not null"+aiselect);
         table[topofTable+1] = computerHand[aiselect];
         computerHand[aiselect] = null;
         topofTable++;

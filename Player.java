@@ -21,6 +21,7 @@ public class Player{
         boolean valid = true;
         Scanner sc = new Scanner(System.in);
         
+        
         if(table[topofTable]==null){
             System.out.println("No card on the table");
         }else if (topofTable==1){
@@ -39,15 +40,17 @@ public class Player{
                 i++;
             }
         }
+        
         System.out.print("Write number to play:");
         int playcard = sc.nextInt()-1;
+        
         while(valid){
-            if(playerHand[playcard]!=null) break;
-            else{
-                System.out.println("Please write valid number");
-                System.out.print("Write number to play:");
-                playcard = sc.nextInt()-1;
-            }            
+                if(playerHand[playcard]!=null) break;
+                else{
+                    System.out.println("Please write valid number");
+                    System.out.print("Write number to play:");
+                    playcard = sc.nextInt()-1;
+                }            
             }
         
             if (table[topofTable]==null){ 

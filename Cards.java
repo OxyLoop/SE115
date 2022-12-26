@@ -54,5 +54,8 @@ public class Cards{
         return number;
     }
     
+    public String getType() {
+        return type;
+    }
     
 }

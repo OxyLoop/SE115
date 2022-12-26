@@ -47,104 +47,125 @@ public class Pisti4{
         }
 //.............................SHUFFLING THE DECK.......................................
         Cards.shuffle(deck);
-//.............................CUTTING THE DECK........................................
-        System.out.print("Write number to cut:");
-        int cutvalue = sc.nextInt();
-        Cards.cut(deck,cutvalue);   
-        for(int i=0; i<52; i++){
-            System.out.println(deck[i].type +"-"+ deck[i].number);
-        }   
-//............................DEALİNG CARDS................................................
-        System.out.println("...................");
-        deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
-            
-            
+//.............................CUTTING THE DECK WITH TRY CATCH........................................
+        int cutvalue = 0;
 
-//.................................PRİNTİNG COMPUTER AND PLAYER HAND FOR TESTİNG......SİLİNCEK.
-            for(int i=0; i<4; i++){
-                System.out.println(computerHand[i].type +"-"+ computerHand[i].number);
+        for(;;){
+                System.out.print("Write number to cut:");  
+            try{
+                cutvalue = Integer.parseInt(sc.nextLine());
+                Cards.cut(deck,cutvalue);
+                break;   
+            }catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("Please write a number between 1 to 52");
             }
+            catch (Exception e){
+                System.out.println("Please write a number.");
+            } 
+        }
+
+            for(int i=0; i<52; i++){
+                System.out.println(deck[i].type +"-"+ deck[i].number);
+            }   
+    //............................DEALİNG CARDS................................................
             System.out.println("...................");
-            for(int i=0; i<4; i++){
-                System.out.println(playerHand[i].type +"-"+ playerHand[i].number);
-            }
-//...............................DEALİNG CARDS TO THE TABLE............................
-            for(int i=1; i<5;i++){
-                table[i] = deck[deckcardCounter];
-                deckcardCounter++;
-                topofTable=i;
-            }
-            System.out.println("...................");
-            
-//.............................START OF THE GAME.....................................
-            while (gameContinue){
-                //dealing cards if player and computer hand is empty
-                if(computerHand[0]==null){
-                    System.out.println("Dealing new cards.");
-                    deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
+            deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
+                
+                
+    
+    //.................................PRİNTİNG COMPUTER AND PLAYER HAND FOR TESTİNG......SİLİNCEK.
+                for(int i=0; i<4; i++){
+                    System.out.println(computerHand[i].type +"-"+ computerHand[i].number);
                 }
-                //printing top card on the table and player playing
-                topofTable = Player.play(playerHand,table,topofTable,playerWonCards,playerpişti);
-                //scrolling player card to the null place
-                Player.scroll(playerHand);
-
-                //ai playing
-                topofTable = Ai.play(computerHand,table,topofTable,computerWonCards);
-                //scrolling ai card to the null place
-                Ai.scroll(computerHand);
-
-                if(table[topofTable]!=null){
-                    System.out.println("Ai played "+table[topofTable].type +"-"+ table[topofTable].number);
-                    } else{
-                        System.out.println("table is empty after ai played");
-                    }
-                
-                
+                System.out.println("...................");
+                for(int i=0; i<4; i++){
+                    System.out.println(playerHand[i].type +"-"+ playerHand[i].number);
+                }
+    //...............................DEALİNG CARDS TO THE TABLE............................
+                for(int i=1; i<5;i++){
+                    table[i] = deck[deckcardCounter];
+                    deckcardCounter++;
+                    topofTable=i;
+                }
                 System.out.println("...................");
                 
-                if(deckcardCounter==52 && computerHand[0]==null ){
-                    System.out.println("Game Over!");
-                    gameContinue = false;
+    //.............................START OF THE GAME.....................................
+                while (gameContinue){
+                    //dealing cards if player and computer hand is empty
+                    if(computerHand[0]==null){
+                        System.out.println("Dealing new cards.");
+                        deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
+                    }
+                    //printing top card on the table and player playing
+                    topofTable = Player.play(playerHand,table,topofTable,playerWonCards,playerpişti);
+                    //scrolling player card to the null place
+                    Player.scroll(playerHand);
+    
+                    //ai playing
+                    topofTable = Ai.play(computerHand,table,topofTable,computerWonCards);
+                    //scrolling ai card to the null place
+                    Ai.scroll(computerHand);
+    
+                    if(table[topofTable]!=null){
+                        System.out.println("Ai played "+table[topofTable].type +"-"+ table[topofTable].number);
+                        } else{
+                            System.out.println("table is empty after ai played");
+                        }
+                    
+                    
+                    System.out.println("...................");
+                    
+                    if(deckcardCounter==52 && computerHand[0]==null ){
+                        System.out.println("Game Over!");
+                        gameContinue = false;
+                    }
                 }
-            }
-            
-            scoreOfPlayer = Player.pistiScore(playerpişti, scoreOfPlayer, playerwoncards);
-            playerwoncards = Player.woncardsnumber(playerWonCards, playerwoncards);
-            for(int i=0; i<52; i++){
-                if(playerpişti[i]==null) continue;
-                playerwoncards++;
-            }
-            computerwoncards = Ai.woncardsnumberai(computerWonCards, computerwoncards);
+                //Calculate player's pişti score first
+                scoreOfPlayer = Player.pistiScore(playerpişti, scoreOfPlayer, playerwoncards);
+                //Calculating player's won cards number
+                playerwoncards = Player.woncardsnumber(playerWonCards, playerwoncards);
+                for(int i=0; i<52; i++){
+                    if(playerpişti[i]==null) continue;
+                    playerwoncards++;
+                }
+                //Calculating computer's won cards number
+                computerwoncards = Ai.woncardsnumberai(computerWonCards, computerwoncards);
+    
+                if(playerwoncards>computerwoncards){
+                    scoreOfPlayer = scoreOfPlayer +3;
+                }
+                
+                for(int i=0; i<52; i++){
+                    if(playerWonCards[i]==null) continue;
+                    if(playerWonCards[i].getType().equals("Diamond") && playerWonCards[i].getNumber().equals("10")){
+                        scoreOfPlayer = scoreOfPlayer +3;
+                    }
+                    if(playerWonCards[i].getType().equals("Club") && playerWonCards[i].getNumber().equals("2")){
+                        scoreOfPlayer = scoreOfPlayer +2;
+                    }
+                }
+    
+                for(int i=0; i<52; i++){
+                    if(playerpişti[i]==null) continue;
+                    if(playerpişti[i].getType().equals("Diamond") && playerpişti[i].getNumber().equals("10")){
+                        scoreOfPlayer = scoreOfPlayer +3;
+                    }
+                    if(playerpişti[i].getType().equals("Club") && playerpişti[i].getNumber().equals("2")){
+                        scoreOfPlayer = scoreOfPlayer +2;
+                    }
+                }
+    
+                
+    
+    
+    
+                System.out.println("masadaki kartlar"+topofTable);
+                System.out.println("COMPUTER CARDS"+computerwoncards);
+                System.out.println("PLAYER CARDS"+playerwoncards);
+                System.out.println("Your score is"+scoreOfPlayer);
+          
 
-            if(playerwoncards>computerwoncards){
-                scoreOfPlayer = scoreOfPlayer +3;
-            }
-
-            System.out.println("masadaki kartlar"+topofTable);
-            System.out.println("COMPUTER CARDS"+computerwoncards);
-            System.out.println("PLAYER CARDS"+playerwoncards);
-            System.out.println("Your score is"+scoreOfPlayer);
+    
         
-
-
-
-
-            
-            
-            
-            
-            
-    
-    
-
-
-
-
-
-
-
-
-
-
     }
 }       

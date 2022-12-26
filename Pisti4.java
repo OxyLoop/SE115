@@ -13,10 +13,13 @@ public class Pisti4{
         Cards[] computerHand = new Cards[5];
         Cards[] table = new Cards[53];
         Cards[] playerWonCards = new Cards[52];
+        Cards[] playerpişti = new Cards[52];
         Cards[] computerWonCards = new Cards[52];
 
 
-        int computerwoncards=0;
+        int scoreOfPlayer=0;
+        int playerwoncards = 0;
+        int computerwoncards = 0;
         int deckcardCounter=0;
         int topofTable = 0;
         boolean gameContinue = true;
@@ -47,12 +50,10 @@ public class Pisti4{
 //.............................CUTTING THE DECK........................................
         System.out.print("Write number to cut:");
         int cutvalue = sc.nextInt();
-        Cards.cut(deck,cutvalue);      
-//.............................PRİNTİNG DECK FOR TESTİNG............................SİLİNCEK.
+        Cards.cut(deck,cutvalue);   
         for(int i=0; i<52; i++){
             System.out.println(deck[i].type +"-"+ deck[i].number);
-            
-        }
+        }   
 //............................DEALİNG CARDS................................................
         System.out.println("...................");
         deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
@@ -83,39 +84,50 @@ public class Pisti4{
                     deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
                 }
                 //printing top card on the table and player playing
-                topofTable = Player.play(playerHand,table,topofTable,playerWonCards);
+                topofTable = Player.play(playerHand,table,topofTable,playerWonCards,playerpişti);
                 //scrolling player card to the null place
                 Player.scroll(playerHand);
-                
-                //printing top card on the table after player played
-                if(table[topofTable]!=null){
-                System.out.println(table[topofTable].type +"-"+ table[topofTable].number);
-                } else{
-                    System.out.println("table is empty");
-                }
-                System.out.println("top of table is "+topofTable);
 
                 //ai playing
-                topofTable = Ai.play(computerHand,table,topofTable,computerwoncards,computerWonCards);
+                topofTable = Ai.play(computerHand,table,topofTable,computerWonCards);
                 //scrolling ai card to the null place
                 Ai.scroll(computerHand);
-                //printing ai hand after play and scroll...................................silincek
-                for(int i=0; i<4;){
-                    if(computerHand[i]==null) break;
-                    else {
-                        int a = i+1;
-                        System.out.println("ai "+ a +"-"+ computerHand[i].type +"-"+ computerHand[i].number);
-                        i++;
+
+                if(table[topofTable]!=null){
+                    System.out.println("Ai played "+table[topofTable].type +"-"+ table[topofTable].number);
+                    } else{
+                        System.out.println("table is empty after ai played");
                     }
-                }
+                
+                
                 System.out.println("...................");
-                System.out.println("deckcardcounter is "+deckcardCounter);
                 
                 if(deckcardCounter==52 && computerHand[0]==null ){
                     System.out.println("Game Over!");
                     gameContinue = false;
                 }
             }
+            
+            scoreOfPlayer = Player.pistiScore(playerpişti, scoreOfPlayer, playerwoncards);
+            playerwoncards = Player.woncardsnumber(playerWonCards, playerwoncards);
+            for(int i=0; i<52; i++){
+                if(playerpişti[i]==null) continue;
+                playerwoncards++;
+            }
+            computerwoncards = Ai.woncardsnumberai(computerWonCards, computerwoncards);
+
+            if(playerwoncards>computerwoncards){
+                scoreOfPlayer = scoreOfPlayer +3;
+            }
+
+            System.out.println("masadaki kartlar"+topofTable);
+            System.out.println("COMPUTER CARDS"+computerwoncards);
+            System.out.println("PLAYER CARDS"+playerwoncards);
+            System.out.println("Your score is"+scoreOfPlayer);
+        
+
+
+
 
             
             

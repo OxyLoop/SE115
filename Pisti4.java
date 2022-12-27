@@ -15,10 +15,12 @@ public class Pisti4{
         Cards[] playerWonCards = new Cards[52];
         Cards[] playerpişti = new Cards[52];
         Cards[] computerWonCards = new Cards[52];
+        Cards[] computerpişti = new Cards[52];
 
 
         int scoreOfPlayer=0;
         int playerwoncards = 0;
+        int scoreOfComputer = 0;
         int computerwoncards = 0;
         int deckcardCounter=0;
         int topofTable = 0;
@@ -102,7 +104,7 @@ public class Pisti4{
                     Player.scroll(playerHand);
     
                     //ai playing
-                    topofTable = Ai.play(computerHand,table,topofTable,computerWonCards);
+                    topofTable = Ai.play(computerHand,table,topofTable,computerWonCards,computerpişti);
                     //scrolling ai card to the null place
                     Ai.scroll(computerHand);
     
@@ -128,41 +130,36 @@ public class Pisti4{
                     if(playerpişti[i]==null) continue;
                     playerwoncards++;
                 }
+
+                scoreOfComputer = Player.pistiScore(computerpişti, scoreOfComputer, computerwoncards);
                 //Calculating computer's won cards number
                 computerwoncards = Ai.woncardsnumberai(computerWonCards, computerwoncards);
+                for(int i=0; i<52; i++){
+                    if(computerpişti[i]==null) continue;
+                    computerwoncards++;
+                }
     
                 if(playerwoncards>computerwoncards){
                     scoreOfPlayer = scoreOfPlayer +3;
+                } else{
+                    scoreOfComputer = scoreOfComputer +3;
                 }
                 
-                for(int i=0; i<52; i++){
-                    if(playerWonCards[i]==null) continue;
-                    if(playerWonCards[i].getType().equals("Diamond") && playerWonCards[i].getNumber().equals("10")){
-                        scoreOfPlayer = scoreOfPlayer +3;
-                    }
-                    if(playerWonCards[i].getType().equals("Club") && playerWonCards[i].getNumber().equals("2")){
-                        scoreOfPlayer = scoreOfPlayer +2;
-                    }
-                }
-    
-                for(int i=0; i<52; i++){
-                    if(playerpişti[i]==null) continue;
-                    if(playerpişti[i].getType().equals("Diamond") && playerpişti[i].getNumber().equals("10")){
-                        scoreOfPlayer = scoreOfPlayer +3;
-                    }
-                    if(playerpişti[i].getType().equals("Club") && playerpişti[i].getNumber().equals("2")){
-                        scoreOfPlayer = scoreOfPlayer +2;
-                    }
-                }
+                scoreOfPlayer = Player.specialcards(playerWonCards, playerpişti, scoreOfPlayer);
+                scoreOfComputer = Player.specialcards(computerWonCards, computerpişti, scoreOfComputer);
     
                 
-    
-    
-    
-                System.out.println("masadaki kartlar"+topofTable);
-                System.out.println("COMPUTER CARDS"+computerwoncards);
-                System.out.println("PLAYER CARDS"+playerwoncards);
-                System.out.println("Your score is"+scoreOfPlayer);
+                System.out.println("Computer has:"+computerwoncards+" cards.");
+                System.out.println("You has:"+playerwoncards+" cards.");
+                System.out.println("Your score is: "+scoreOfPlayer);
+                System.out.println("Computer score is: "+scoreOfComputer);
+                if(scoreOfPlayer>scoreOfComputer){
+                    System.out.println("YOU WON!");
+                } else if (scoreOfPlayer<scoreOfComputer){
+                    System.out.println("YOU LOSE!");
+                }else{
+                    System.out.println("How did you do that, YOU AND THE COMPUTER İS TIE");
+                }
           
 
     

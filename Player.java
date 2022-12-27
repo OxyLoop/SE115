@@ -18,6 +18,7 @@ public class Player{
 
     public static int play(Cards[] playerHand, Cards[] table, int topofTable, Cards[] playerWonCards, Cards[] playerpişti ){
         int playerwoncards = 0;
+        int playcard = 0;
         boolean valid = true;
         Scanner sc = new Scanner(System.in);
         
@@ -41,17 +42,18 @@ public class Player{
             }
         }
         
-        System.out.print("Write number to play:");
-        int playcard = sc.nextInt()-1;
         
-        while(valid){
-                if(playerHand[playcard]!=null) break;
-                else{
-                    System.out.println("Please write valid number");
-                    System.out.print("Write number to play:");
-                    playcard = sc.nextInt()-1;
-                }            
+        for(;;){
+            playcard = takeInput(); 
+            if(playcard<4 && playcard>=0){
+                if(playerHand[playcard]!=null){
+                    //playcard -1;
+                    break;
+                } 
+            } else {
             }
+            System.out.println("Please write number between your cards.");
+        }
         
             if (table[topofTable]==null){ 
                 table[topofTable]=playerHand[playcard];
@@ -120,6 +122,46 @@ public class Player{
             } else{}
         }
         return playerwoncards;
+    }
+
+    public static int specialcards(Cards[] playerWonCards, Cards[] playerpişti, int scoreOfPlayer){
+        for(int i=0; i<52; i++){
+            if(playerWonCards[i]==null) continue;
+            if(playerWonCards[i].getType().equals("Diamond") && playerWonCards[i].getNumber().equals("10")){
+                scoreOfPlayer = scoreOfPlayer +3;
+            }
+            if(playerWonCards[i].getType().equals("Club") && playerWonCards[i].getNumber().equals("2")){
+                scoreOfPlayer = scoreOfPlayer +2;
+            }
+        }
+
+        for(int i=0; i<52; i++){
+            if(playerpişti[i]==null) continue;
+            if(playerpişti[i].getType().equals("Diamond") && playerpişti[i].getNumber().equals("10")){
+                scoreOfPlayer = scoreOfPlayer +3;
+            }
+            if(playerpişti[i].getType().equals("Club") && playerpişti[i].getNumber().equals("2")){
+                scoreOfPlayer = scoreOfPlayer +2;
+            }
+        }
+        return scoreOfPlayer;
+    }
+
+
+    public static int takeInput (){
+        Scanner sc = new Scanner(System.in);
+        int input =0;
+
+        for(;;){
+                System.out.print("Write number to play:");  
+            try{
+                input = Integer.parseInt(sc.nextLine()) -1;
+                break;   
+            } catch (Exception e){
+                System.out.println("Please write a number:");
+            } 
+        }
+        return input;
     }
 
 

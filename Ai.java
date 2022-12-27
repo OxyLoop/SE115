@@ -16,7 +16,7 @@ public class Ai{
     }
     
     
-    public static int play(Cards[] computerHand, Cards[] table, int topofTable, Cards[] computerWonCards){
+    public static int play(Cards[] computerHand, Cards[] table, int topofTable, Cards[] computerWonCards, Cards[] computerpişti){
         int computerwoncards = 0;
         if(table[topofTable]==null){
             Random r = new Random(System.currentTimeMillis());
@@ -32,21 +32,38 @@ public class Ai{
         for(int i=0; i<4; i++){
             if(computerHand[i]==null) break;    
             if(table[topofTable].getNumber().equals(computerHand[i].getNumber())){
-                System.out.println("Computer take table cards");
-                table[topofTable+1] = computerHand[i];
-                computerHand[i] = null;
-                topofTable++;
-                for(int j=1; j<=topofTable;j++){
-                    if(computerWonCards[computerwoncards]!=null){
-                        computerwoncards++;
-                        j = j-1;
-                    } else {
-                    computerWonCards[computerwoncards]=table[j];
-                    table[j]= null;
+                if(topofTable==1){
+                    System.out.println("Computer make PISTI");
+                    table[topofTable+1] = computerHand[i];
+                    computerHand[i] = null;
+                    topofTable++;
+                    for(int j=1; j<=topofTable;j++){
+                        if(computerpişti[computerwoncards]!=null){
+                            computerwoncards++;
+                            j = j-1;
+                        } else {
+                        computerpişti[computerwoncards]=table[j];
+                        table[j]= null;
+                        }
                     }
+                    topofTable=1;
+                    return topofTable;
                 }
-                topofTable=1;
-                return topofTable;
+                else{System.out.println("Computer take table cards");
+                    table[topofTable+1] = computerHand[i];
+                    computerHand[i] = null;
+                    topofTable++;
+                    for(int j=1; j<=topofTable;j++){
+                        if(computerWonCards[computerwoncards]!=null){
+                            computerwoncards++;
+                            j = j-1;
+                        } else {
+                        computerWonCards[computerwoncards]=table[j];
+                        table[j]= null;
+                        }
+                    }
+                    topofTable=1;
+                    return topofTable;}
             }
             
         }
@@ -105,4 +122,12 @@ public class Ai{
         }
         return computerwoncards;
     }
+
+    public static int pistiScore(Cards[] playerpişti, int scoreOfPlayer, int playerwoncards){
+        for(int i=0; i<51; i++){
+            if(playerpişti[i]==null) continue;
+            scoreOfPlayer = scoreOfPlayer +5;
+            }
+            return scoreOfPlayer;
+        }
 }

@@ -63,7 +63,8 @@ public class Ai{
                         }
                     }
                     topofTable=1;
-                    return topofTable;}
+                    return topofTable;
+                }
             }
             
         }

@@ -65,24 +65,10 @@ public class Pisti4{
                 System.out.println("Please write a number.");
             } 
         }
-
-            for(int i=0; i<52; i++){
-                System.out.println(deck[i].type +"-"+ deck[i].number);
-            }   
     //............................DEALİNG CARDS................................................
             System.out.println("...................");
             deckcardCounter = Cards.deal(deck,computerHand,playerHand,deckcardCounter);
                 
-                
-    
-    //.................................PRİNTİNG COMPUTER AND PLAYER HAND FOR TESTİNG......SİLİNCEK.
-                for(int i=0; i<4; i++){
-                    System.out.println(computerHand[i].type +"-"+ computerHand[i].number);
-                }
-                System.out.println("...................");
-                for(int i=0; i<4; i++){
-                    System.out.println(playerHand[i].type +"-"+ playerHand[i].number);
-                }
     //...............................DEALİNG CARDS TO THE TABLE............................
                 for(int i=1; i<5;i++){
                     table[i] = deck[deckcardCounter];
@@ -102,6 +88,7 @@ public class Pisti4{
                     topofTable = Player.play(playerHand,table,topofTable,playerWonCards,playerpişti);
                     //scrolling player card to the null place
                     Player.scroll(playerHand);
+                    System.out.println("...................");
     
                     //ai playing
                     topofTable = Ai.play(computerHand,table,topofTable,computerWonCards,computerpişti);
@@ -148,9 +135,10 @@ public class Pisti4{
                 scoreOfPlayer = Player.specialcards(playerWonCards, playerpişti, scoreOfPlayer);
                 scoreOfComputer = Player.specialcards(computerWonCards, computerpişti, scoreOfComputer);
     
-                
+                System.out.println("...................");
                 System.out.println("Computer has:"+computerwoncards+" cards.");
                 System.out.println("You has:"+playerwoncards+" cards.");
+                System.out.println("...................");
                 System.out.println("Your score is: "+scoreOfPlayer);
                 System.out.println("Computer score is: "+scoreOfComputer);
                 if(scoreOfPlayer>scoreOfComputer){

@@ -19,8 +19,6 @@ public class Player{
     public static int play(Cards[] playerHand, Cards[] table, int topofTable, Cards[] playerWonCards, Cards[] playerpişti ){
         int playerwoncards = 0;
         int playcard = 0;
-        boolean valid = true;
-        Scanner sc = new Scanner(System.in);
         
         
         if(table[topofTable]==null){
@@ -30,6 +28,7 @@ public class Player{
             System.out.println(table[topofTable].type +"-"+ table[topofTable].number);
         }
         else{
+            System.out.println("There are "+ topofTable+" cards on table.");
             System.out.println(table[topofTable].type +"-"+ table[topofTable].number);
         }
         System.out.println("...................");

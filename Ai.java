@@ -15,9 +15,10 @@ public class Ai{
         }
     }
     
-    
+//..........................................................................    
     public static int play(Cards[] computerHand, Cards[] table, int topofTable, Cards[] computerWonCards, Cards[] computerpişti){
         int computerwoncards = 0;
+        //checking if table is null
         if(table[topofTable]==null){
             Random r = new Random(System.currentTimeMillis());
             int aiselect = 0;
@@ -29,9 +30,11 @@ public class Ai{
             computerHand[aiselect] = null;
             return topofTable;
         }
+        //checking does computer has same number value of top card on board
         for(int i=0; i<4; i++){
             if(computerHand[i]==null) break;    
             if(table[topofTable].getNumber().equals(computerHand[i].getNumber())){
+                //checking computer pişti
                 if(topofTable==1){
                     System.out.println("Computer make PISTI");
                     table[topofTable+1] = computerHand[i];
@@ -49,6 +52,7 @@ public class Ai{
                     topofTable=1;
                     return topofTable;
                 }
+                //if computer do not make pişti 
                 else{System.out.println("Computer take table cards");
                     table[topofTable+1] = computerHand[i];
                     computerHand[i] = null;
@@ -65,32 +69,32 @@ public class Ai{
                     topofTable=1;
                     return topofTable;
                 }
-            }
-            
+            }   
         }
+        //checking does computer has joker card
         for(int i=0; i<4; i++){
             if(computerHand[i]==null) break;
             if(table[topofTable]!=null){
-            if(computerHand[i].number=="Joker"){
-                System.out.println("Computer uses it's joker cards");
-                table[topofTable+1] = computerHand[i];
-                computerHand[i] = null;
-                topofTable++;
-                for(int j=1; j<=topofTable;j++){
-                    if(computerWonCards[computerwoncards]!=null){
-                        computerwoncards++;
-                        j = j-1;
-                    } else{
-                    computerWonCards[computerwoncards]=table[j];
-                    table[j]= null;
+                if(computerHand[i].number=="Joker"){
+                    System.out.println("Computer uses it's joker cards");
+                    table[topofTable+1] = computerHand[i];
+                    computerHand[i] = null;
+                    topofTable++;
+                    for(int j=1; j<=topofTable;j++){
+                        if(computerWonCards[computerwoncards]!=null){
+                            computerwoncards++;
+                            j = j-1;
+                        } else{
+                        computerWonCards[computerwoncards]=table[j];
+                        table[j]= null;
+                        }
                     }
+                    topofTable=1;
+                    return topofTable;
                 }
-                topofTable=1;
-                return topofTable;
-            }
-        } 
+            } 
         }
-
+        //if function do not return anything computer play random card from hand
         Random r = new Random(System.currentTimeMillis());
         int aiselect = 0;
         for(;;){
@@ -104,17 +108,7 @@ public class Ai{
         return topofTable;
     }  
 
-
-    public static int Score(Cards[] computerWonCards, int scoreOfComputer){
-        for(int i=0; i<52;i++){
-            if(computerWonCards[i]!=null){
-                scoreOfComputer++;
-            } else {}
-        }
-        return scoreOfComputer;
-    }
-
-
+//.......................................................................... 
     public static int woncardsnumberai(Cards[] computerWonCards, int computerwoncards){
         for(int i=0; i<52;i++){
             if(computerWonCards[i]!=null){
@@ -124,11 +118,4 @@ public class Ai{
         return computerwoncards;
     }
 
-    public static int pistiScore(Cards[] playerpişti, int scoreOfPlayer, int playerwoncards){
-        for(int i=0; i<51; i++){
-            if(playerpişti[i]==null) continue;
-            scoreOfPlayer = scoreOfPlayer +5;
-            }
-            return scoreOfPlayer;
-        }
 }

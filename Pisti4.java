@@ -94,7 +94,8 @@ public class Pisti4{
                     topofTable = Ai.play(computerHand,table,topofTable,computerWonCards,computerpişti);
                     //scrolling ai card to the null place
                     Ai.scroll(computerHand);
-    
+                    
+                    //writing ai play for player
                     if(table[topofTable]!=null){
                         System.out.println("Ai played "+table[topofTable].type +"-"+ table[topofTable].number);
                         } else{
@@ -103,38 +104,48 @@ public class Pisti4{
                     
                     
                     System.out.println("...................");
-                    
+                    //end game while finisher
                     if(deckcardCounter==52 && computerHand[0]==null ){
                         System.out.println("Game Over!");
                         gameContinue = false;
                     }
                 }
-                //Calculate player's pişti score first
+    //.............................CALCULATING SCORE.....................................
+                //Calculate player's pişti score 
                 scoreOfPlayer = Player.pistiScore(playerpişti, scoreOfPlayer, playerwoncards);
                 //Calculating player's won cards number
                 playerwoncards = Player.woncardsnumber(playerWonCards, playerwoncards);
+                //adding pişti cards number to player won cards number
                 for(int i=0; i<52; i++){
                     if(playerpişti[i]==null) continue;
                     playerwoncards++;
                 }
-
+                
+                
+                //Calculate computer's pişti score 
                 scoreOfComputer = Player.pistiScore(computerpişti, scoreOfComputer, computerwoncards);
                 //Calculating computer's won cards number
                 computerwoncards = Ai.woncardsnumberai(computerWonCards, computerwoncards);
+                //adding pişti cards number to computer won cards number
                 for(int i=0; i<52; i++){
                     if(computerpişti[i]==null) continue;
                     computerwoncards++;
                 }
-    
+                
+                
+                // adding score card number points
                 if(playerwoncards>computerwoncards){
                     scoreOfPlayer = scoreOfPlayer +3;
                 } else{
                     scoreOfComputer = scoreOfComputer +3;
                 }
                 
+                //checking special cards
                 scoreOfPlayer = Player.specialcards(playerWonCards, playerpişti, scoreOfPlayer);
                 scoreOfComputer = Player.specialcards(computerWonCards, computerpişti, scoreOfComputer);
-    
+                
+                
+    //.............................END GAME STRINGS.....................................
                 System.out.println("...................");
                 System.out.println("Computer has:"+computerwoncards+" cards.");
                 System.out.println("You has:"+playerwoncards+" cards.");

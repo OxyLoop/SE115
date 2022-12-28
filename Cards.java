@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class Cards{
+    //creating object
     public String type;
     public String number;
 
@@ -9,37 +10,37 @@ public class Cards{
         this.type=type;
         this.number=number;
     }
-
+//........................SHUFFLE THE DECK.................................................. 
     public void shuffle(Cards[] deck){
         Random r = new Random(System.currentTimeMillis());
         for(int i=0; i<52; i++){
             int n1 = r.nextInt(52);
             int n2 = r.nextInt(52);
-            Cards yedekd ;
-            yedekd = deck[n1];
+            Cards temp ;
+            temp = deck[n1];
             deck[n1]= deck[n2];
-            deck[n2] = yedekd; 
+            deck[n2] = temp; 
         }
     }
-
+//........................CUT THE DECK .................................................. 
     public void cut(Cards[] deck,int cutvalue){
         int cutCounter=0;
 
-        Cards[] yedekDeck = new Cards[52];
+        Cards[] tempDeck = new Cards[52];
         for (int i = 0; i<52; i++) {
             if(cutvalue+i==52) break;
-            yedekDeck[i] = deck[cutvalue+i];
+            tempDeck[i] = deck[cutvalue+i];
             cutCounter++;
         }
         for (int i=0; i<cutvalue; i++){
-            yedekDeck[cutCounter] =  deck[i];
+            tempDeck[cutCounter] =  deck[i];
             cutCounter++;
         }
         for(int i=0; i<52; i++){
-            deck[i]= yedekDeck[i];
+            deck[i]= tempDeck[i];
         }
     }
-
+//........................DEAL CARDS TO COMPUTER AND PLAYER.................................................. 
     public int deal (Cards[] deck, Cards[] computerHand, Cards[] playerHand, int deckcardCounter){
         for(int i=0; i<4;i++){
             computerHand[i]=deck[deckcardCounter];

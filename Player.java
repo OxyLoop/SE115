@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Player{
     public static void scroll(Cards[] playerHand){
+        //scrolling player hand for null places
         for(int i=0; i<4;){
             if(playerHand[i]==null){
                 if(playerHand[i]==null && playerHand[i+1]==null){
@@ -15,12 +16,12 @@ public class Player{
         }
     }
 
-
+//..........................................................................
     public static int play(Cards[] playerHand, Cards[] table, int topofTable, Cards[] playerWonCards, Cards[] playerpişti ){
         int playerwoncards = 0;
         int playcard = 0;
         
-        
+        //.............................SHOWING PLAYER TOP OF TABLE .....................................
         if(table[topofTable]==null){
             System.out.println("No card on the table");
         }else if (topofTable==1){
@@ -33,6 +34,7 @@ public class Player{
         }
         System.out.println("...................");
         
+        //showing player hand
         for(int i=0; i<4;){
             if(playerHand[i]==null) break;
             else {
@@ -41,7 +43,7 @@ public class Player{
             }
         }
         
-        
+        //.............................TAKING INPUT FOR PLAY.....................................
         for(;;){
             playcard = takeInput(); 
             if(playcard<4 && playcard>=0){
@@ -54,11 +56,13 @@ public class Player{
             System.out.println("Please write number between your cards.");
         }
         
+        //.............................PLAYER PLAY TURN.....................................
             if (table[topofTable]==null){ 
                 table[topofTable]=playerHand[playcard];
                 playerHand[playcard]=null;
                 
             }else if(table[topofTable].getNumber().equals(playerHand[playcard].getNumber()) || playerHand[playcard].getNumber().equals("Joker")){
+                //if pişti
                 if(topofTable==1 && playerHand[playcard].getNumber()!="Joker"){
                     System.out.println("You make PİSTİ");
                     table[topofTable+1]=playerHand[playcard];
@@ -74,6 +78,7 @@ public class Player{
                         }    
                     }
                 }else{
+                // if player played same card number
                 System.out.println("You take table cards");
                 table[topofTable+1]=playerHand[playcard];
                 playerHand[playcard]=null;
@@ -93,6 +98,7 @@ public class Player{
                 
             }
             else {
+                //player card adding to the top of table
                 table[topofTable+1]=playerHand[playcard];
                 playerHand[playcard]=null;
                 topofTable++;    
@@ -104,8 +110,9 @@ public class Player{
         return topofTable;
     }
 
-
+//..........................................................................
     public static int pistiScore(Cards[] playerpişti, int scoreOfPlayer, int playerwoncards){
+        // calculating pişti number 
         for(int i=0; i<51; i++){
             if(playerpişti[i]==null) continue;
             scoreOfPlayer = scoreOfPlayer +5;
@@ -113,8 +120,9 @@ public class Player{
             return scoreOfPlayer;
         }
 
-
+//..........................................................................
     public static int woncardsnumber(Cards[] playerWonCards, int playerwoncards){
+        // calculating how many cards have in this array
         for(int i=0; i<52;i++){
             if(playerWonCards[i]!=null){
                 playerwoncards++;
@@ -123,7 +131,9 @@ public class Player{
         return playerwoncards;
     }
 
+//..........................................................................
     public static int specialcards(Cards[] playerWonCards, Cards[] playerpişti, int scoreOfPlayer){
+        //checking special cards for player won cards array
         for(int i=0; i<52; i++){
             if(playerWonCards[i]==null) continue;
             if(playerWonCards[i].getType().equals("Diamond") && playerWonCards[i].getNumber().equals("10")){
@@ -133,7 +143,7 @@ public class Player{
                 scoreOfPlayer = scoreOfPlayer +2;
             }
         }
-
+        //checking special cards for player won cards array
         for(int i=0; i<52; i++){
             if(playerpişti[i]==null) continue;
             if(playerpişti[i].getType().equals("Diamond") && playerpişti[i].getNumber().equals("10")){
@@ -146,11 +156,11 @@ public class Player{
         return scoreOfPlayer;
     }
 
-
+//..........................................................................
     public static int takeInput (){
         Scanner sc = new Scanner(System.in);
         int input =0;
-
+        //taking input for checking exception
         for(;;){
                 System.out.print("Write number to play:");  
             try{

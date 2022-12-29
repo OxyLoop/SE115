@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Formatter;
+import java.io.FileWriter;
 
 public class Player{
     public static void scroll(Cards[] playerHand){
@@ -53,7 +55,7 @@ public class Player{
                 } 
             } else {
             }
-            System.out.println("Please write number between your cards.");
+            System.out.println("Please write number near your cards.");
         }
         
         //.............................PLAYER PLAY TURN.....................................

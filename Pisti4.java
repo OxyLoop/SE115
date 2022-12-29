@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Pisti4{
     public static void main(String[] args){
+        System.out.println("WELCOME PISTI GAME");
         Scanner sc = new Scanner(System.in);
         Random r = new Random(System.currentTimeMillis());
 //........................CREATING ARRAYS AND PRIMATIVES...............................
@@ -53,7 +54,7 @@ public class Pisti4{
         int cutvalue = 0;
 
         for(;;){
-                System.out.print("Write number to cut:");  
+                System.out.print("Write number to cut the deck:");  
             try{
                 cutvalue = Integer.parseInt(sc.nextLine());
                 Cards.cut(deck,cutvalue);
@@ -131,9 +132,12 @@ public class Pisti4{
                     if(computerpişti[i]==null) continue;
                     computerwoncards++;
                 }
+                //adding number of won cards to score of player and computer
+                scoreOfPlayer = scoreOfPlayer + playerwoncards;
+                scoreOfComputer = scoreOfComputer + computerwoncards;
                 
                 
-                // adding score card number points
+                // adding score compare card number points
                 if(playerwoncards>computerwoncards){
                     scoreOfPlayer = scoreOfPlayer +3;
                 } else{
@@ -147,8 +151,8 @@ public class Pisti4{
                 
     //.............................END GAME STRINGS.....................................
                 System.out.println("...................");
+                System.out.println("You have:"+playerwoncards+" cards.");
                 System.out.println("Computer has:"+computerwoncards+" cards.");
-                System.out.println("You has:"+playerwoncards+" cards.");
                 System.out.println("...................");
                 System.out.println("Your score is: "+scoreOfPlayer);
                 System.out.println("Computer score is: "+scoreOfComputer);
@@ -157,11 +161,8 @@ public class Pisti4{
                 } else if (scoreOfPlayer<scoreOfComputer){
                     System.out.println("YOU LOSE!");
                 }else{
-                    System.out.println("How did you do that, YOU AND THE COMPUTER İS TIE");
+                    System.out.println("You are very lucky person, YOU AND THE COMPUTER IS TIE");
                 }
-          
-
-    
         
     }
 }       
